@@ -13,6 +13,10 @@
     padding-right: 40px;
 }
 
+.industry-buttons{
+    width: 100px;
+}
+
 h1 {
     text-align: center;
     color: rgb(66, 63, 63);
@@ -24,6 +28,11 @@ h6 {
     text-align: center;
     color: rgb(66, 63, 63);
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.industry-drop{
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 

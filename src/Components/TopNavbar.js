@@ -29,7 +29,7 @@ const NavigationBar = (props) => {
                 </img>
                 </NavbarBrand>
               <NavItem>
-              <Link to="/" className="topNav-title">Bulls Trading</Link>
+              <Link to="/" className="topNav-title">Home</Link>
               </NavItem>
             </Nav>
             <NavbarText className="userButtons">Login | Signup</NavbarText>
