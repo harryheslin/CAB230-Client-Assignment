@@ -1,0 +1,19 @@
+.background-div{
+    background-color: #ffbdbd;
+}
+
+.main-div{
+    padding-left: 30vw;
+    padding-right: 30vw;
+    padding-top: 5vw;
+}
+
+.logo{
+    height: 15vw;
+    width: 25vw;
+}
+
+.home:hover{
+    color: rgb(177, 3, 3);
+    text-decoration: none;
+}

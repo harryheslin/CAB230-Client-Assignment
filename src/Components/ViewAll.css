@@ -1,13 +1,37 @@
-.table{
+.table-container {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.table {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.table-background {
+    background-color: #ffbdbd;
     padding-left: 40px;
     padding-right: 40px;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(66, 63, 63);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold !important;
+}
+
+h6 {
+    text-align: center;
+    color: rgb(66, 63, 63);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
 .ag-row-hover {
     background-color: #ff6f6f !important;
-  }
+}
 
-  .ag-cell-focus,.ag-cell-no-focus{
-    border:none !important;
-  }
+.ag-cell-focus,
+.ag-cell-no-focus {
+    border: none !important;
+}

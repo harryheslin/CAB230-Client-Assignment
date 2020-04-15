@@ -3,7 +3,7 @@ import Homepage from './Components/Homepage';
 import ViewAll from './Components/ViewAll';
 import Search from './Components/Search';
 import Compare from './Components/Compare';
-import TopNavbar from './Components/TopNavbar'
+import TopNavbar from './Components/TopNavbar';
 import {
   BrowserRouter as Router,
   Switch,
