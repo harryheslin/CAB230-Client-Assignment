@@ -1,0 +1,13 @@
+.table{
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+
+.ag-row-hover {
+    background-color: #ff6f6f !important;
+  }
+
+  .ag-cell-focus,.ag-cell-no-focus{
+    border:none !important;
+  }
