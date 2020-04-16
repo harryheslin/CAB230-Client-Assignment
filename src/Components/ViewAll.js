@@ -6,19 +6,30 @@ import "./ViewAll.css";
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
+const industries = [
+    { title: "View All", link: "" },
+    { title: "Consumer Discretionary", link: "?industry=Consumer%20Discretionary" },
+    { title: "Consumer Staples", link: "?industry=Consumer%20Staples" },
+    { title: "Energy", link: "?industry=Energy" },
+    { title: "Financials", link: "?industry=Financials" },
+    { title: "Health Care", link: "?industry=Health%20Care" },
+    { title: "Industrials", link: "?industry=Industrials" },
+    { title: "Information Technology", link: "?industry=Information%20Technology" },
+    { title: "Materials", link: "?industry=Materials" },
+    { title: "Real Estate", link: "?industry=Real%20Estate" },
+    { title: "Telecommunication Services", link: "?industry=Telecommunication%20Services" },
+    { title: "Utilities", link: "?industry=Utilities" }
+]
+
 export default function ViewAll() {
 
     const [rowData, setRowData] = useState([]);
     const [selected, setSelected] = useState("");
+    const [industry, setIndustry] = useState("");
 
-    const industries = ["View All","Consumer Discretionary", "Consumer Staples", "Energy",
-        "Financials", "Health Care", "Industrials",
-        "Information Technology", "Materials", "Real Estate",
-        "Telecommunication Services", "Utilities"
-    ]
 
     useEffect(() => {
-        fetch("http://131.181.190.87:3000/stocks/symbols")
+        fetch("http://131.181.190.87:3000/stocks/symbols" + industry)
             .then(res => res.json())
             .then(data =>
                 data.map(company => {
@@ -30,31 +41,33 @@ export default function ViewAll() {
                 })
             )
             .then(allCompanies => setRowData(allCompanies));
-    }, []);
+    }, [industry]);
+
+    function setIndustryFunc() {
+        setIndustry(this.link);
+    }
 
     function IndustryDrop() {
-        
+
         const [dropdownOpen, setDropdownOpen] = useState(false);
-      
         const toggle = () => setDropdownOpen(prevState => !prevState);
-      
+
         return (
-          <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle caret>
-              Industry
+            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle caret>
+                    Industry
               </DropdownToggle>
-            <DropdownMenu className="industry-drop">
+                <DropdownMenu className="industry-drop">
                     {industries.map(company => (
-                        <DropdownItem>{company}</DropdownItem>
+                        <DropdownItem onClick={setIndustryFunc.bind(company)}>{company.title}</DropdownItem>
                     ))}
-            </DropdownMenu>
+                </DropdownMenu>
             </Dropdown>
         )
-      }
-    
+    }
+
     function clickHander(props) {
         setSelected(props.data.name);
-        console.log(selected);
     }
 
     function Table() {
@@ -78,7 +91,6 @@ export default function ViewAll() {
 
         return (
             <div className="table-container">
-
                 <div className="table-background"
                     style={{
                         height: "85vh",
@@ -95,9 +107,8 @@ export default function ViewAll() {
                         <br />
                         <div className="industry-drop">
                             <IndustryDrop />
-                            </div>
+                        </div>
                         <Table />
-
                     </div>
                 </div>
             </div>
