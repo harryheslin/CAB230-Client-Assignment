@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import "./ViewAll.css";
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import StockInfo from './StockInfo';
 
 const industries = [
     { title: "View All", link: "" },
@@ -67,7 +68,7 @@ export default function ViewAll() {
     }
 
     function clickHander(props) {
-        setSelected(props.data.name);
+        setSelected(props.data.symbol);
     }
 
     function Table() {
@@ -88,7 +89,6 @@ export default function ViewAll() {
     }
 
     if (selected === "") {
-
         return (
             <div className="table-container">
                 <div className="table-background"
@@ -117,7 +117,7 @@ export default function ViewAll() {
     //Add in a call to the component here that is used in search
     else {
         return (
-            <h1>{selected}</h1>
+            <StockInfo code = {selected} />
         )
     }
 }
