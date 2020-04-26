@@ -1,16 +1,17 @@
 .background-div{
-    background-color: #ffbdbd;
+    background-color: #eb8d8d;
 }
 
-.main-div{
-    padding-left: 30vw;
+.main-error-div{
+    /* padding-left: 30vw;
     padding-right: 30vw;
-    padding-top: 5vw;
+    padding-top: 5vw; */
 }
+
 
 .logo{
-    height: 15vw;
-    width: 25vw;
+    height: 7.5vw;
+    width: 12.5vw;
 }
 
 .home:hover{
