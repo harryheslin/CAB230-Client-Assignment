@@ -9,6 +9,9 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import StockInfo from './Components/StockInfo';
+import Stock from './Components/Stock';
+
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           </Route>
           <Route path="/compare">
             <Compare />
+          </Route>
+          <Route path="/:code" component={StockInfo}>
+            <Stock code= {StockInfo}/>
           </Route>
         </Switch>
       </Router>
