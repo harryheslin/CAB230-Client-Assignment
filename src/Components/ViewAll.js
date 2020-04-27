@@ -5,7 +5,7 @@ import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import "./ViewAll.css";
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import StockInfo from './StockInfo';
+import Stock from './Stock';
 
 const industries = [
     { title: "View All", link: "" },
@@ -117,7 +117,7 @@ export default function ViewAll() {
     //Add in a call to the component here that is used in search
     else {
         return (
-            <StockInfo code = {selected} />
+            <Stock name={selected} />
         )
     }
 }

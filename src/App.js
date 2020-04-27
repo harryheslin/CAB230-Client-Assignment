@@ -12,6 +12,11 @@ import {
 import StockInfo from './Components/StockInfo';
 import Stock from './Components/Stock';
 
+const Child = ({ match }) => (
+  <div>
+    <h3>ID: {match.params.id}</h3>
+  </div>
+)
 
 function App() {
   return (
@@ -30,9 +35,6 @@ function App() {
           </Route>
           <Route path="/compare">
             <Compare />
-          </Route>
-          <Route path="/:code" component={StockInfo}>
-            <Stock code= {StockInfo}/>
           </Route>
         </Switch>
       </Router>
