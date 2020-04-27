@@ -24,18 +24,28 @@ export default function Search() {
         [search]);
 
     if (error) {
-        return (<div>
-            <Alert type="danger" headline="Uh oh">
-                This is an error message about your search!
+        if (errorCode === 400)
+            return (<div className="error-div">
+                <Alert type="danger" headline="Uh oh">
+                    You have entered invalid query parameters!
                 </Alert>
-            <SearchBar onSubmit={setSearch} />
-        </div>
-        )
+                <SearchBar onSubmit={setSearch} />
+            </div>
+            )
+        else {
+            return (<div className="error-div">
+                <Alert type="danger" headline="Uh oh">
+                    No entry for {search} found in the stocks database.
+                    </Alert>
+                <SearchBar onSubmit={setSearch} />
+            </div>
+            )
+        }
     }
 
     if (!error && errorCode === 200) {
         return (
-            <Stock name={search} />
+            <Redirect to={"/stock/" + search} />
         )
     }
 

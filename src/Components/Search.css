@@ -11,6 +11,10 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.error-div{
+    text-align: center;
+}
+
 #search-title{
     font-size: calc(2.9em + 1vw);
 }
