@@ -5,7 +5,7 @@ export default function Stock(props) {
      // We can use the `useParams` hook here to access
   // the dynamic pieces of the URL.
     const url = (window.location.pathname);
-    const re = new RegExp('([A-Z]+)');
+    const re = new RegExp('([A-Z.]+)');
     const code = re.exec(url);
     
   return (

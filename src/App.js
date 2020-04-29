@@ -3,6 +3,7 @@ import Homepage from './Components/Homepage';
 import ViewAll from './Components/ViewAll';
 import Search from './Components/Search';
 import Compare from './Components/Compare';
+import Login from './Components/Login';
 import TopNavbar from './Components/TopNavbar';
 import {
   BrowserRouter as Router,
@@ -21,6 +22,9 @@ function App() {
           <Route exact path="/">
             <Homepage />
           </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
           <Route path="/viewAll">
             <ViewAll />
           </Route>
@@ -31,7 +35,6 @@ function App() {
             <Compare />
           </Route>
           <Route path="/stock/:code" children={<Stock />}>
-            {/* <Stock /> */}
           </Route>
         </Switch>
       </Router>
