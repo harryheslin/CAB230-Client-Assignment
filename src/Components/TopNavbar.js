@@ -24,13 +24,22 @@ const NavigationBar = (props) => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar >
             <Nav className="mr-auto" navbar>
-              <NavbarBrand>
+            
+            <Link to="/">
+            <NavbarBrand>
               <img src="bulllogo.png" width="90" height="50" class="d-inline-block align-top" alt="Logo">
                 </img>
                 </NavbarBrand>
-              <NavItem>
-              <Link to="/" className="topNav-title">Home</Link>
-              </NavItem>
+                </Link>
+              {/* <Link to="/" className="topNav-title ">Home</Link> */}
+            {/* <div class="navbar-center "> */}
+                <NavItem>
+              <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/search" className="navigate-buttons">Search</Link>
+                  </NavItem>
+              {/* </div> */}
             </Nav>
             <NavbarText className="userButtons"> <Link to= "/login">Login</Link> | Signup</NavbarText>
           </Collapse>

@@ -7,8 +7,15 @@
     text-align: center;
     padding-bottom: 6vw;
     padding-top: 6vw;
-    background-color: #eb8d8d;
+    background-color: #ad8888;
+    border: 1px solid black;
+    opacity: 0.90;
     font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.search-fields-div{
+    opacity: 100%;
 }
 
 .error-div{
@@ -25,7 +32,7 @@
 }
 
 #search-button{
-    width: calc(5.0em + 1vw);
+    width: calc(8.0em + 1vw);
     height: calc(2.0em + 1vw);
     font-weight: bold;
 }

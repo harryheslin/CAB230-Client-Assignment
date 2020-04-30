@@ -3,6 +3,7 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import "./ViewAll.css";
+import "./Homepage.css";
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Stock from './Stock';
@@ -45,6 +46,7 @@ export default function ViewAll() {
                 })
             )
             .then(allCompanies => setRowData(allCompanies));
+        console.log(industry);
     }, [industry]);
 
     function setIndustryFunc() {
@@ -93,34 +95,49 @@ export default function ViewAll() {
 
     if (selected === "") {
         return (
-            <div className="table-container">
+            <div>
+            <div className="jumbo">
+                <div class="transbox">
+                    <div className="transMessage">
+                        <p>
+                            <div className="title">
+                                Available Stocks
+                </div>
+                        </p>
+                    </div>
+                </div>
+            {/* <div className="table-container">
                 <div className="table-background"
                     style={{
                         height: "85vh",
-                    }}>
+                    }}> */}
                     <div
                         className="ag-theme-alpine-dark table"
                         style={{
                             height: "60vh",
-                            width: "100%",
+                            width: "90%",
+                            marginRight: "5%",
+                            marginLeft : "5%"
                         }}
                     >
-                        <h1>Available Stocks</h1>
+                        {/* <h1>Available Stocks</h1>
                         <h6>Double click company for latest information</h6>
-                        <br />
+                        <br /> */}
                         <div className="industry-drop">
                             <IndustryDrop />
                         </div>
                         <Table />
                     </div>
                 </div>
-            </div>
+                </div>
+                // </div>
+                // </div>
         )
     }
     //Add in a call to the component here that is used in search
     else {
         return (
-            <Redirect to={"/stock/"+selected} />
+            <Redirect to={"/stock/" + selected} />
         )
     }
 }

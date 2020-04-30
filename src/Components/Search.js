@@ -5,6 +5,7 @@ import {
 } from "react-router-dom";
 import StockInfo from './StockInfo';
 import "./Search.css";
+import "./Homepage.css";
 import Stock from './Stock';
 
 export default function Search() {
@@ -62,11 +63,19 @@ export default function Search() {
 function SearchBar(props) {
     const [innerSearch, setInnerSearch] = useState('');
     return (
-        <div className="main-div">
+
+        <div className="jumbo">
+            <div class="transbox">
+                <div className="transMessage">
+                    <p>
+                        <div className="title">
+                        Search By Stock Code
+                </div>
+                    </p>
+                </div>
+            </div>
             <div className="search-div">
-                <h1 id="search-title">Search By Stock Code</h1>
                 <p>Please Enter 1-5 Uppercase Letters</p>
-                <div>
                     <input
                         aria-labelledby="search-button"
                         name="search"
@@ -85,7 +94,32 @@ function SearchBar(props) {
                         Search
             </button>
                 </div>
-            </div>
         </div>
+
+        // <div className="main-div">
+        //     <div className="search-div">
+        //         <h1 id="search-title">Search By Stock Code</h1>
+        //         <p>Please Enter 1-5 Uppercase Letters</p>
+        //         <div>
+        //             <input
+        //                 aria-labelledby="search-button"
+        //                 name="search"
+        //                 id="search"
+        //                 type="search"
+        //                 value={innerSearch}
+        //                 onChange={(e) => setInnerSearch(e.target.value)}
+        //                 maxLength="5"
+        //             />
+        //             <br /> <br /> <br />
+        //             <button
+        //                 id="search-button"
+        //                 type="button"
+        //                 onClick={() => { props.onSubmit(innerSearch); setInnerSearch(""); }}
+        //             >
+        //                 Search
+        //     </button>
+        //         </div>
+        //     </div>
+        // </div>
     )
 }

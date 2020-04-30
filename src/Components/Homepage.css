@@ -1,16 +1,16 @@
 .jumbo{
     background-image:url("jumboimg.jpeg");
     background-size: cover;
-    height: 60vh;
+    height: 90vh;
     color: white;
 }
 
 .transbox {
-    margin: 10px;
     background-color: #ffffff;
     border: 1px solid black;
     opacity: 0.75;
     box-shadow: 5px 5px grey;
+    margin-bottom: 10px;
   }
 
 .transMessage{

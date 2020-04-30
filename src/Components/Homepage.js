@@ -26,24 +26,39 @@ const icons = [
   }
 ]
 
-function CardContent(props) {
-  let { title, image, link } = props
-  return (
-    <Card className="optionCard mx-auto">
-      <Link to={link}>
-        <CardImg top width="1%" height="180" src={image} className="Card-image" alt="Card image cap" />
-        </Link>
-      <CardBody>
-        <CardTitle>{title}</CardTitle>
-      </CardBody>
-    </Card>
-  )
-}
+// function CardContent(props) {
+//   let { title, image, link } = props
+//   return (
+//     <Card className="optionCard mx-auto">
+//       <Link to={link}>
+//         <CardImg top width="1%" height="180" src={image} className="Card-image" alt="Card image cap" />
+//         </Link>
+//       <CardBody>
+//         <CardTitle>{title}</CardTitle>
+//       </CardBody>
+//     </Card>
+//   )
+// }
 
 const Homepage = (props) => {
   return (
     <div>
-      <Jumbotron className="jumbo" fluid>
+    {/* <p>
+    <div className="title">
+        Bulls Trading Exchange Portal
+        </div>
+      </p> */}
+      <div className="jumbo">
+      <div class="transbox">
+            <div className="transMessage">
+              <p>
+                <div className="title">
+                  Bulls Trading Exchange Portal
+                </div>
+              </p>
+            </div>
+          </div>
+      {/* <Jumbotron className="jumbo" fluid>
         <Container fluid>
           <div class="transbox">
             <div className="transMessage">
@@ -58,14 +73,15 @@ const Homepage = (props) => {
             </div>
           </div>
         </Container>
-      </Jumbotron>
+      </Jumbotron> */}
 
-      <div className="row">
+      {/* <div className="row">
         {icons.map(icon => (
           <CardContent {...icon} />
         ))}
+      </div> */}
       </div>
-    </div>
+      </div>
   );
 };
 
