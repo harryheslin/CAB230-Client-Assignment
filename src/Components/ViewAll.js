@@ -137,7 +137,8 @@ export default function ViewAll() {
     //Add in a call to the component here that is used in search
     else {
         return (
-            <Redirect to={"/stock/" + selected} />
+            // <Redirect to={"/stock/" + selected} />
+            <Stock code={selected}/>
         )
     }
 }

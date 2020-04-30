@@ -9,8 +9,9 @@ export default function Stock(props) {
     const code = re.exec(url);
     
   return (
+    // code[0]
     <div>
-      <h3>Code: {code[0]} </h3>
+      <h3>Code: {props.code} </h3>
     </div>
   );
 }

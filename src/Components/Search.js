@@ -46,7 +46,8 @@ export default function Search() {
 
     if (!error && errorCode === 200) {
         return (
-            <Redirect to={"/stock/" + search} />
+            // <Redirect to={"/stock/" + search} />
+            <Stock code={search}/>
         )
     }
 

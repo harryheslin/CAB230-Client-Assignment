@@ -5,6 +5,7 @@ import Search from './Components/Search';
 import Compare from './Components/Compare';
 import Login from './Components/Login';
 import TopNavbar from './Components/TopNavbar';
+import Signup from './Components/Signup';
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
           <Route path="/viewAll">
             <ViewAll />

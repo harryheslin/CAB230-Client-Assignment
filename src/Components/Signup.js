@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import "./Login.css";
 
-export default function Login() {
+export default function Signup() {
     const [email, setEmail] = useState('');
     const [innerEmail, setInnerEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
 
     useEffect(() => {
         console.log(email);
@@ -37,7 +38,17 @@ export default function Login() {
                         onChange={(e) => setInnerEmail(e.target.value)}
                     />
                     <br />
-                    <p className="login-label" >Password</p>
+                    <p className="login-label" >Create Password</p>
+                    <input
+                        aria-labelledby="submit-button"
+                        name="password"
+                        id="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <br />
+                    <p className="login-label" >Repeat Password</p>
                     <input
                         aria-labelledby="submit-button"
                         name="password"
@@ -52,7 +63,7 @@ export default function Login() {
                         type="button"
                         onClick={() => { setEmail(innerEmail) }}
                     >
-                        Login
+                        Signup
                 </button>
                 </div>
             </div>

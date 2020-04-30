@@ -41,7 +41,7 @@ const NavigationBar = (props) => {
                   </NavItem>
               {/* </div> */}
             </Nav>
-            <NavbarText className="userButtons"> <Link to= "/login">Login</Link> | Signup</NavbarText>
+            <NavbarText className="userButtons"> <Link to= "/login">Login</Link> | <Link to ="/signup">Signup</Link></NavbarText>
           </Collapse>
       </Navbar>
       </div>

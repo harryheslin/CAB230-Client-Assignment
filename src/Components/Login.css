@@ -1,0 +1,31 @@
+.login-div{
+    text-align: center;
+    padding-bottom: 5vw;
+    padding-top: 5vw;
+    margin-left: 31vw;
+    margin-right:31vw;
+    margin-top: 4vw;
+    width: 38%;
+    background-color: #ad8888;
+    border: 1px solid black;
+    opacity: 0.90;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
+
+.main-div{
+    padding-top: 2%;
+}
+
+
+#submit-button{
+    margin-top: 30px;
+    width: 8vw;
+    background-color: #ad8888;
+    border-color: white;
+    color: white;
+}
+.login-label{
+    font-size: 22px;
+    margin-top: 20px;
+}
