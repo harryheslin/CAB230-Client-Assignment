@@ -8,7 +8,7 @@ function Error(props) {
     if (props.error) {
         return (<div className="error-div">
             <Alert type="danger" headline="Uh oh">
-                Login failed, please ensure correct details
+                {props.type} failed, please ensure correct details
             </Alert>
         </div>
         )
@@ -50,7 +50,7 @@ export default function Login() {
     if (authenticated === 'clear') {
         return (
             <div>
-                <Error error={error} />
+                <Error error={error} type="Login" />
                 <div className="jumbo">
                     <div class="transbox">
                         <div className="transMessage">
