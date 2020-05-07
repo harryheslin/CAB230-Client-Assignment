@@ -39,6 +39,7 @@ export default function Login() {
                     console.log(res);
                     localStorage.setItem('token', res.token);
                     setAuthenticated(localStorage.getItem('token'))
+                    window.location.reload();
                 }
                 else {
                     setError(true);
