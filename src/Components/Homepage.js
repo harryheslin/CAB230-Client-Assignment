@@ -51,11 +51,11 @@ const Homepage = (props) => {
       <div className="jumbo">
       <div class="transbox">
             <div className="transMessage">
-              <p>
+              {/* <p> */}                                {/*TODO This P is what is making the trans box small*/}
                 <div className="title">
                   Bulls Trading Exchange Portal
                 </div>
-              </p>
+              {/* </p> */}
             </div>
           </div>
       {/* <Jumbotron className="jumbo" fluid>

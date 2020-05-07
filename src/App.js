@@ -4,6 +4,7 @@ import ViewAll from './Components/ViewAll';
 import Search from './Components/Search';
 import Compare from './Components/Compare';
 import Login from './Components/Login';
+import Logout from './Components/Logout';
 import TopNavbar from './Components/TopNavbar';
 import Signup from './Components/Signup';
 import {
@@ -16,8 +17,8 @@ import Stock from './Components/Stock';
 
 function App() {
   return (
+    <Router>
     <div className="App">
-      <Router>
         <TopNavbar />
         <Switch>
           <Route exact path="/">
@@ -25,6 +26,9 @@ function App() {
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/logout">
+            <Logout />
           </Route>
           <Route path="/signup">
             <Signup />
@@ -41,8 +45,9 @@ function App() {
           <Route path="/stock/:code" children={<Stock />}>
           </Route>
         </Switch>
+        </div>
       </Router>
-    </div>
+    
   );
 }
 

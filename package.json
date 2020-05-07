@@ -9,6 +9,7 @@
     "ag-grid-community": "^23.0.2",
     "ag-grid-react": "^23.0.3",
     "bootstrap": "^4.4.1",
+    "jsonwebtoken": "^8.5.1",
     "react": "^16.13.1",
     "react-bs-notifier": "^5.0.0",
     "react-dom": "^16.13.1",

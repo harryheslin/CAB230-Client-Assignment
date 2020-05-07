@@ -7,13 +7,31 @@ export default function Signup() {
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
 
-    useEffect(() => {
-        console.log(email);
+    // useEffect(() => {
+    //     console.log(email);
+    //     console.log(password)
+    //     console.log(repeatPassword);
+    //     setPassword("");
+    //     setInnerEmail("")
+
+
+    // },
+    //     [email]);
+
+    function submitSignup() {
+        const url = "http://131.181.190.87:3000/user/register"
+        console.log(innerEmail);
         console.log(password)
-        setPassword("");
-        setInnerEmail("")
-    },
-        [email]);
+        console.log(repeatPassword);
+        //console.log(JSON.stringify({ email: innerEmail, password: password }));
+        fetch(url, {
+            method: "POST",
+            headers: { accept: "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({ email: innerEmail , password: password })
+        })
+            .then((res) => res.json())
+            .then((res) => console.log(res))
+    }
 
     return (
         <div className="jumbo">
@@ -51,17 +69,18 @@ export default function Signup() {
                     <p className="login-label" >Repeat Password</p>
                     <input
                         aria-labelledby="submit-button"
-                        name="password"
-                        id="password"
+                        name="repeat-password"
+                        id="repeat-password"
                         type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={repeatPassword}
+                        onChange={(e) => setRepeatPassword(e.target.value)}
                     />
                     <br />
                     <button
                         id="submit-button"
                         type="button"
-                        onClick={() => { setEmail(innerEmail) }}
+                        // onClick={() => { setEmail(innerEmail) }}
+                         onClick={() => { submitSignup() }}
                     >
                         Signup
                 </button>

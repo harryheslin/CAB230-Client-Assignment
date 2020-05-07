@@ -83,6 +83,7 @@ function SearchBar(props) {
                         id="search"
                         type="search"
                         value={innerSearch}
+                        // placeholder="1-5 Uppercase Letters"
                         onChange={(e) => setInnerSearch(e.target.value)}
                         maxLength="5"
                     />
