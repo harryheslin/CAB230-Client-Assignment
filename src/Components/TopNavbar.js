@@ -19,11 +19,7 @@ export default function NavigationBar(props) {
   const toggle = () => setIsOpen(!isOpen);
 
   let token = localStorage.getItem("token");
-  let authorised = localStorage.getItem("authorised");
-  const [isLogged, setIsLogged] = useState("");
-  console.log("Nav bar logged in status is " + props.status)
-  
-  
+
   if (token !== "clear") {
     console.log(token);
     return (
@@ -39,17 +35,14 @@ export default function NavigationBar(props) {
                   </img>
                 </NavbarBrand>
               </Link>
-              {/* <Link to="/" className="topNav-title ">Home</Link> */}
-              {/* <div class="navbar-center "> */}
-              <NavItem>
+             
+              <NavbarText>
                 <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>
-              </NavItem>
-              <NavItem>
+              </NavbarText>
+              <NavbarText>
                 <Link to="/search" className="navigate-buttons">Search</Link>
-              </NavItem>
-              {/* </div> */}
+              </NavbarText>
             </Nav>
-            {/* {accountStatus()} */}
             <NavbarText className="userButtons"> <Link to="/logout">Logout</Link></NavbarText>
           </Collapse>
         </Navbar>
@@ -60,30 +53,24 @@ export default function NavigationBar(props) {
 
   else {
     return (
-
       <div>
         <Navbar className="navbar-light topNav" expand="md">
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar >
-            <Nav className="mr-auto" navbar>y
-
+            <Nav className="mr-auto" navbar>
               <Link to="/">
                 <NavbarBrand>
                   <img src="bulllogo.png" width="90" height="50" class="d-inline-block align-top" alt="Logo">
                   </img>
                 </NavbarBrand>
               </Link>
-              {/* <Link to="/" className="topNav-title ">Home</Link> */}
-              {/* <div class="navbar-center "> */}
-              <NavItem>
+              <NavbarText>
                 <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>
-              </NavItem>
-              <NavItem>
+              </NavbarText>
+              <NavbarText>
                 <Link to="/search" className="navigate-buttons">Search</Link>
-              </NavItem>
-              {/* </div> */}
+                </NavbarText>
             </Nav>
-            {/* {accountStatus()} */}
             <NavbarText className="userButtons"><Link to="/login">Login</Link> | <Link to="/signup">Signup</Link></NavbarText>
           </Collapse>
         </Navbar>
@@ -92,4 +79,3 @@ export default function NavigationBar(props) {
     );
   }
 }
-// export default NavigationBar;   

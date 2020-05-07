@@ -7,16 +7,6 @@ export default function Signup() {
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
 
-    // useEffect(() => {
-    //     console.log(email);
-    //     console.log(password)
-    //     console.log(repeatPassword);
-    //     setPassword("");
-    //     setInnerEmail("")
-
-
-    // },
-    //     [email]);
 
     function submitSignup() {
         const url = "http://131.181.190.87:3000/user/register"
@@ -37,11 +27,9 @@ export default function Signup() {
         <div className="jumbo">
             <div class="transbox">
                 <div className="transMessage">
-                    <p>
                         <div className="title">
                         Bulls Trading Exchange Portal
                 </div>
-                    </p>
                 </div>
             </div>
             <div className="login-div">

@@ -46,14 +46,11 @@ export default function Search() {
 
     if (!error && errorCode === 200) {
         return (
-            // <Redirect to={"/stock/" + search} />
             <Stock code={search}/>
         )
     }
 
     if (!error) {
-        console.log(search)
-        console.log(errorCode)
         return (
             <SearchBar onSubmit={setSearch} />
         )
@@ -68,11 +65,9 @@ function SearchBar(props) {
         <div className="jumbo">
             <div class="transbox">
                 <div className="transMessage">
-                    <p>
                         <div className="title">
                         Search By Stock Code
                 </div>
-                    </p>
                 </div>
             </div>
             <div className="search-div">
@@ -83,7 +78,6 @@ function SearchBar(props) {
                         id="search"
                         type="search"
                         value={innerSearch}
-                        // placeholder="1-5 Uppercase Letters"
                         onChange={(e) => setInnerSearch(e.target.value)}
                         maxLength="5"
                     />
@@ -97,31 +91,5 @@ function SearchBar(props) {
             </button>
                 </div>
         </div>
-
-        // <div className="main-div">
-        //     <div className="search-div">
-        //         <h1 id="search-title">Search By Stock Code</h1>
-        //         <p>Please Enter 1-5 Uppercase Letters</p>
-        //         <div>
-        //             <input
-        //                 aria-labelledby="search-button"
-        //                 name="search"
-        //                 id="search"
-        //                 type="search"
-        //                 value={innerSearch}
-        //                 onChange={(e) => setInnerSearch(e.target.value)}
-        //                 maxLength="5"
-        //             />
-        //             <br /> <br /> <br />
-        //             <button
-        //                 id="search-button"
-        //                 type="button"
-        //                 onClick={() => { props.onSubmit(innerSearch); setInnerSearch(""); }}
-        //             >
-        //                 Search
-        //     </button>
-        //         </div>
-        //     </div>
-        // </div>
     )
 }
