@@ -50,7 +50,6 @@ export default function Login() {
     if (authenticated === 'clear') {
         return (
             <div>
-                <Error error={error} type="Login" />
                 <div className="jumbo">
                     <div class="transbox">
                         <div className="transMessage">
@@ -61,6 +60,7 @@ export default function Login() {
                     </div>
                     <div className="login-div">
                         <div>
+                        <Error error={error} type="Login" />
                             <p className="login-label">Email</p>
                             <input
                                 aria-labelledby="submit-button"
