@@ -7,6 +7,7 @@ import "./Homepage.css";
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import Stock from './Stock';
+import { Redirect } from 'react-router-dom';
 
 const industries = [
     { title: "View All", link: "" },
@@ -128,8 +129,11 @@ export default function ViewAll() {
     }
     //Add in a call to the component here that is used in search
     else {
-        return (
-            <Stock code={selected}/>
+        return(
+            <Redirect to={"./stock/" + selected} />
         )
+        // return (
+        //     <Stock code={selected}/>
+        // )
     }
 }

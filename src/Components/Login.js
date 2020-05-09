@@ -40,6 +40,7 @@ export default function Login() {
                     localStorage.setItem('token', res.token);
                     setAuthenticated(localStorage.getItem('token'))
                     window.location.reload();
+                    console.log(localStorage.getItem('token'))
                 }
                 else {
                     setError(true);
