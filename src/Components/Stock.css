@@ -4,8 +4,8 @@
 
 .stock-div{
     text-align: center;
-    padding-bottom: 2vw;
-    padding-top: 2vw;
+    padding-bottom: 1vw;
+    padding-top: 1vw;
     margin-left: 6vw;
     margin-right: 6vw;
     background-color: #706c6c;
@@ -20,11 +20,20 @@
     float:right;  
 }
 .chart-background{
-    background-color: #e2d5d5; 
+    background-color: #ffffff;
     margin-right: 2vw;
     margin-left: 2vw;
-    padding-top: 1vw;
-    height: 29vw;
+    padding-top: 0.5vw;
+    height: 30vw;
+}
+
+#close-price-title{
+    font-size: 1.3vw;
+    color: rgb(160, 63, 63);
+}
+.custom-tooltip{
+    color: black;
+    font-size: 10px;
 }
 
 .table-heading{
@@ -39,6 +48,7 @@
 
 .chart{
     float:left;
+    margin-top: 1.1vw;
 }
 
 #date-title{
