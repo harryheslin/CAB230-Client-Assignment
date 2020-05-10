@@ -15,57 +15,22 @@ export default function Stock(props) {
   const re = new RegExp('([A-Z.]+)');
   const [code, setCode] = re.exec(url);
 
-
+  //const [companyData, setCompanyData] = useState([{
+  //   timestamp: "",
+  //   symbol: "",
+  //   name: "",
+  //   industry: "",
+  //   open: "",
+  //   high: "",
+  //   low: "",
+  //   close: "",
+  //   volumes: ""
+  // }]);
   const [loading, setLoading] = useState(true);
-  const [companyData, setCompanyData] = useState([{
-    timestamp: "",
-    symbol: "",
-    name: "",
-    industry: "",
-    open: "",
-    high: "",
-    low: "",
-    close: "",
-    volumes: ""
-  }]);
-  const [latestCompanyData, setlatestCompanyData] = useState([{
-    timestamp: "",
-    symbol: "",
-    name: "",
-    industry: "",
-    open: "",
-    high: "",
-    low: "",
-    close: "",
-    volumes: ""
-  }]);
+  const [companyData, setCompanyData] = useState([{}]);
+  const [latestCompanyData, setlatestCompanyData] = useState([{}]);
   let authenticated = (localStorage.getItem('token'));
-  const [date, setDate] = useState("");
-  const [selected, setSelected] = useState("");
   const [searchDate, setSearchDate] = useState("");
-
-
-  const animals = [
-    {
-      timestamp: "",
-      symbol: "",
-      name: "",
-      industry: "",
-      open: "",
-      high: "",
-      low: "",
-      close: ",",
-      volumes: ""
-    }
-  ]
-
-  // useEffect(() => {
-  //   fetch("http://131.181.190.87:3000/stocks/" + code)
-  //     .then(res => res.json())
-  //     .then(res => setlatestCompanyData(res) & setDate(res.timestamp))
-  //     .then(setLoading(false))
-  //     .catch(e => console.log(e))
-  // }, [code]);
 
 
   useEffect(() => {
@@ -88,7 +53,7 @@ export default function Stock(props) {
         low: res.low,
         close: res.close,
         volumes: res.volumes
-      }, animals]))
+      }]))
 
     if (searchDate !== "" && searchDate !== latestCompanyData[0].timestamp) {
       fetch("http://131.181.190.87:3000/stocks/authed/" + code + "?from=" + searchDate + "T00%3A00%3A00.000Z&to=" + latestCompanyData[0].timestamp + "T00%3A00%3A00.000Z", { headers })
@@ -109,7 +74,7 @@ export default function Stock(props) {
           }
           )
         )
-        .then(allCompanies => setCompanyData(allCompanies))
+        .then(allCompanies => setCompanyData(allCompanies.concat(latestCompanyData)))
         .then(setLoading(false));
     }
     else {
@@ -119,27 +84,30 @@ export default function Stock(props) {
   }, [searchDate]);
 
 
-  // function dateSearch() {
-  //   const headers = {
-  //     accept: "applciation/json",
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${authenticated}`,
-  //   };
-
-  //   console.log(companyData.symbol)
-  //   fetch("http://131.181.190.87:3000/stocks/authed/" + code, { headers })
-  //     .then(res => res.json())
-  //     .then(res => console.log(res))
-  //     .catch(e => console.log(e))
-  // }
-
-
-  // function clickHander(props) {
-  //   setSelected(props.data.date);
-  // }
-
-  function Table(props) {
+  function HistorySearch(props) {
     const [innerDateSearch, setInnerDateSearch] = useState('');
+    if (authenticated !== "clear") {
+      return (
+        <div>
+          <p id="date-title">Select a date for history</p>
+          <div className="date-search">
+            <input type="date" id="start" name="trip-start"
+              value={innerDateSearch}
+              onChange={(e) => setInnerDateSearch(e.target.value)}
+              min="2018-01-01" max={latestCompanyData[0].timestamp}></input>
+            <button onClick={() => { props.onSubmit(innerDateSearch) }}>Search</button>
+          </div>
+        </div>
+      )
+    }
+    else {
+      return(<div></div>)
+    }
+
+  }
+
+  function Table() {
+    
     return (
       <div>
         <div
@@ -151,35 +119,42 @@ export default function Stock(props) {
             marginTop: "0vh"
           }}
         >
-          <p id="date-title">Select a date for price history</p>
-          <div className="date-search">
-            <input type="date" id="start" name="trip-start"
-              value={innerDateSearch}
-              onChange={(e) => setInnerDateSearch(e.target.value)}
-              min="2018-01-01" max={latestCompanyData[0].timestamp}></input>
-            <button onClick={() => { props.onSubmit(innerDateSearch) }}>Search</button>
-          </div>
+          <HistorySearch onSubmit={setSearchDate}/>
           <AgGridReact
-            rowData={searchDate === "" || searchDate === latestCompanyData[0].timestamp ? latestCompanyData : companyData}
-            //  pagination={true}
-            //  paginationPageSize={30}
-            //rowSelection={true}
-            //onRowDoubleClicked={clickHander}
-            
+             rowData={searchDate === "" || searchDate === latestCompanyData[0].timestamp ? latestCompanyData : companyData}
+          //  pagination={true}
+          //  paginationPageSize={30}
           >
-            <AgGridColumn headerName="Date" field="timestamp" filter="agTextColumnFilter" sort={companyData.length === 1 ? "desc" : "asc"} sortable="true" width={250} flex={300}></AgGridColumn>
+            <AgGridColumn headerName="Date" field="timestamp" filter="agTextColumnFilter" sort="asc" sortable="true" width={250} flex={300}></AgGridColumn>
             <AgGridColumn headerName="Open" field="open" filter="agTextColumnFilter" sortable="true" width={100} flex={150}></AgGridColumn>
             <AgGridColumn headerName="High" field="high" filter="agTextColumnFilter" sortable="true" width={100} flex={150}></AgGridColumn>
             <AgGridColumn headerName="Low" field="low" filter="agTextColumnFilter" sortable="true" width={100} flex={150}></AgGridColumn>
             <AgGridColumn headerName="Close" field="close" filter="agTextColumnFilter" sortable="true" width={100} flex={150}></AgGridColumn>
             <AgGridColumn headerName="Volume" field="volumes" filter="agTextColumnFilter" sortable="true" width={200} flex={200}></AgGridColumn>
-
           </AgGridReact>
-        </div >
+        </div>
       </div>
     )
   }
 
+  function LatestGraph() {
+    const data = [{ name: 'Open', Price: latestCompanyData[0].open }, { name: 'High', Price: latestCompanyData[0].high },
+    { name: 'Low', Price: latestCompanyData[0].low }, { name: 'Close', Price: latestCompanyData[0].close }];
+    return (
+      <div className="chart-background">
+        <div className="chart">
+          <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
+            <Line strokeWidth="2" type="monotone" activeDot="true" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
+            <CartesianGrid stroke="black" strokeDasharray="1 1" />
+            <XAxis dataKey="name" stroke="black" />
+            <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
+            <Tooltip height="1px" />
+          </LineChart>
+        </div>
+        <ViewHistory />
+      </div>
+    )
+  }
 
   function ViewHistory() {
     if (authenticated === "clear") {
@@ -188,6 +163,7 @@ export default function Stock(props) {
           {<Link to="/login" style={{
             color: "black"
           }}> Login </Link>} to view stock history
+          <Table />
         </div>
       )
     }
@@ -198,26 +174,6 @@ export default function Stock(props) {
     }
   }
 
-
-  // function renderCurrentStock() {
-  //   if (authenticated !== "clear") {
-  //     const data = [{ name: 'Open', Price: latestCompanyData[0].open }, { name: 'High', Price: latestCompanyData[0].high }, { name: 'Low', Price: latestCompanyData[0].low }, { name: 'Close', Price: latestCompanyData[0].close }];
-  //     return (
-  //       <div className="chart-background">
-  //         <div className="chart">
-  //           <LineChart width={550} height={300} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
-  //             <Line strokeWidth="4" type="monotone" activeDot="true" dataKey="Price" stroke="rgb(160, 63, 63)" />
-  //             <CartesianGrid stroke="black" strokeDasharray="1 1" />
-  //             <XAxis dataKey="name" stroke="black" />
-  //             <YAxis stroke="black" />
-  //             <Tooltip height="1px" />
-  //           </LineChart>
-  //         </div>
-  //         <ViewHistory />
-  //       </div>
-  //     )
-  //   }
-  // };
 
   function CustomTooltip({ payload, label, active }) {
     if (active) {
@@ -230,82 +186,32 @@ export default function Stock(props) {
 
     return null;
   }
-
+  const formatter = (value) => `$${value}`;
   function renderCurrentStock() {
 
-    const formatter = (value) => `$${value}`;
-    if (authenticated !== "clear") {
+      if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 || authenticated === "clear") {
+        return (<LatestGraph />)
 
-      if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1) {
-        const data = [{ name: 'Open', Price: latestCompanyData[0].open }, { name: 'High', Price: latestCompanyData[0].high }, { name: 'Low', Price: latestCompanyData[0].low }, { name: 'Close', Price: latestCompanyData[0].close }];
-        return (
-          <div className="chart-background">
-            <div className="chart">
-              <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
-                <Line strokeWidth="4" type="monotone" activeDot="true" dataKey="Price" stroke="rgb(160, 63, 63)" />
-                <CartesianGrid stroke="black" strokeDasharray="1 1" />
-                <XAxis dataKey="name" stroke="black" />
-                <YAxis stroke="black" dataKey="Price" tickFormatter={formatter}/>
-                <Tooltip height="1px" />
-              </LineChart>
-            </div>
-            <ViewHistory />
-          </div>
-        )
-     } else {
-
+      } else {
         const data = companyData.slice(0).reverse().map((companyData) => ({ name: 'Close', Price: companyData.close, Date: companyData.timestamp }))
         return (
           <div className="chart-background">
             <div className="chart">
               <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
 
-                <Line strokeWidth="4" type="monotone" activeDot="true" dataKey="Price" stroke="rgb(160, 63, 63)" />
+                <Line strokeWidth="2" type="monotone" activeDot="true" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
                 <CartesianGrid stroke="black" strokeDasharray="1 1" />
                 <XAxis stroke="black" dataKey="Date" tick={false} />
-                <YAxis stroke="black" dataKey="Price" tickFormatter={formatter}/>
+                <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
                 <Tooltip height="1px" content={<CustomTooltip />} />
               </LineChart>
               <p id="close-price-title">Closing Prices</p>
             </div>
             <ViewHistory />
-          </div>      
+          </div>
         )
-      }
     }
   };
-
-
-  //--------------------------
-
-  // function renderCurrentStock() {
-  //   if (authenticated === "clear") {
-  //     const data = [{ name: 'Open', Price: latestCompanyData.open }, { name: 'High', Price: latestCompanyData.high }, { name: 'Low', Price: latestCompanyData.low }, { name: 'Close', Price: latestCompanyData.close }];
-  //     return (
-  //       <div className="chart-background">
-  //         <div className="chart">
-  //           <LineChart width={550} height={300} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
-  //             <Line strokeWidth="4" type="monotone" activeDot="true" dataKey="Price" stroke="rgb(160, 63, 63)" />
-  //             <CartesianGrid stroke="black" strokeDasharray="1 1" />
-  //             <XAxis dataKey="name" stroke="black" />
-  //             <YAxis stroke="black" />
-  //             <Tooltip height="1px" />
-  //           </LineChart>
-  //         </div>
-  //         <ViewHistory />
-  //         <div className="chart-details">
-  //           Open: {latestCompanyData.open}<br />
-  //         High: {latestCompanyData.high}<br />
-  //         Low: {latestCompanyData.low}<br />
-  //         Close: {latestCompanyData.close}<br />
-  //         Volumes: {latestCompanyData.volumes}<br />
-  //         </div>
-  //       </div>
-  //     )
-  //   }
-  // };
-  //----------------------------
-
 
   if (!loading) {
     return (
