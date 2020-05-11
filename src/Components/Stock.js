@@ -14,15 +14,17 @@ export default function Stock(props) {
 
   const url = (window.location.pathname);
   const re = new RegExp('([A-Z.]+)');
-  const [code, setCode] = re.exec(url);
+  const [code] = re.exec(url);
+
   const [loading, setLoading] = useState(true);
   const [companyData, setCompanyData] = useState([{}]);
   const [latestCompanyData, setlatestCompanyData] = useState([{}]);
-  let authenticated = (localStorage.getItem('token'));
   const [searchDate, setSearchDate] = useState("");
   const [expiredToken, setExpiredToken] = useState(false);
 
+  let authenticated = (localStorage.getItem('token'));
 
+  
   useEffect(() => {
 
     const headers = {
@@ -66,7 +68,7 @@ export default function Stock(props) {
         )
         .then(allCompanies => setCompanyData(allCompanies.concat(latestCompanyData)))
         .then(setLoading(false))
-        .catch(error => setExpiredToken(true));
+        .catch((error) => setExpiredToken(true));
     }
     else {
       setLoading(false);
@@ -93,11 +95,9 @@ export default function Stock(props) {
     else {
       return (<div></div>)
     }
-
   }
 
   function Table() {
-
     return (
       <div>
         <div
@@ -195,6 +195,7 @@ export default function Stock(props) {
   }
 
   const formatter = (value) => `$${value}`;
+
   function renderCurrentStock() {
     if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 || authenticated === "clear") {
       return (<LatestGraph />)
@@ -219,6 +220,7 @@ export default function Stock(props) {
       )
     }
   };
+
   if (expiredToken) {
     return (
       <div>

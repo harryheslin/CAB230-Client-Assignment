@@ -59,12 +59,12 @@ export default function ViewAll() {
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
                     Industry
-              </DropdownToggle>
+                </DropdownToggle>
                 <DropdownMenu className="industry-drop">
                     {industries.map(company => (
                         <React.Fragment key={company.title}>
                             <DropdownItem onClick={setIndustryFunc.bind(company)}>{company.title}</DropdownItem>
-                            </React.Fragment>
+                        </React.Fragment>
                     ))}
                 </DropdownMenu>
             </Dropdown>
@@ -95,46 +95,35 @@ export default function ViewAll() {
     if (selected === "") {
         return (
             <div>
-            <div className="jumbo">
-                <div className="transbox">
-                    <div className="transMessage">
-                        {/* <p> */}
-                            <div className="title">
-                                Available Stocks
-                </div>
-                        {/* </p> */}
+                <div className="jumbo">
+                    <div className="transbox">
+                        <div className="transMessage">
+                                <div className="title">
+                                    Available Stocks
+                                </div>
+                        </div>
                     </div>
-                </div>
-            {/* <div className="table-container">
-                <div className="table-background"
-                    style={{
-                        height: "85vh",
-                    }}> */}
                     <div
                         className="ag-theme-alpine-dark table"
                         style={{
-                            height: "60vh",
-                            width: "90%",
-                            marginRight: "5%",
-                            marginLeft : "5%"
+                        height: "60vh",
+                        width: "90%",
+                        marginRight: "5%",
+                        marginLeft : "5%"
                         }}
-                    >
+                        >
                         <div className="industry-drop">
                             <IndustryDrop />
                         </div>
                         <Table />
                     </div>
                 </div>
-                </div>
+            </div>
         )
     }
-    //Add in a call to the component here that is used in search
     else {
         return(
             <Redirect to={"./stock/" + selected} />
         )
-        // return (
-        //     <Stock code={selected}/>
-        // )
     }
 }

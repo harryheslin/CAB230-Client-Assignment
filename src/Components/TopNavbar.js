@@ -4,7 +4,6 @@ import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavbarText
 } from 'reactstrap';
@@ -26,14 +25,9 @@ export default function NavigationBar(props) {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar >
             <Nav className="mr-auto" navbar>
-              
-              {/* <NavbarBrand> */}
               <Link to="/">
-                  <img src="bulllogo.png" width="90" height="50" className="d-inline-block align-top" alt="Logo">
-                  </img>
-                  </Link>
-                  {/* </NavbarBrand> */}
-                
+                <img src="bulllogo.png" width="90" height="50" className="d-inline-block align-top" alt="Logo" />
+              </Link>
               <NavbarText>
                 <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>
               </NavbarText>
@@ -45,10 +39,8 @@ export default function NavigationBar(props) {
           </Collapse>
         </Navbar>
       </div>
-
     )
   }
-
   else {
     return (
       <div>
@@ -57,10 +49,7 @@ export default function NavigationBar(props) {
           <Collapse isOpen={isOpen} navbar >
             <Nav className="mr-auto" navbar>
               <Link to="/">
-                {/* <NavbarBrand> */}
-                  <img src="bulllogo.png" width="90" height="50" className="d-inline-block align-top" alt="Logo">
-                  </img>
-                {/* </NavbarBrand> */}
+                  <img src="bulllogo.png" width="90" height="50" className="d-inline-block align-top" alt="Logo" />
               </Link>
               <NavbarText>
                 <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>
@@ -73,7 +62,6 @@ export default function NavigationBar(props) {
           </Collapse>
         </Navbar>
       </div>
-
     );
   }
 }

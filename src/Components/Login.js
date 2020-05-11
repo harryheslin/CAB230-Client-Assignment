@@ -4,33 +4,12 @@ import { Redirect } from "react-router-dom";
 import NavigationBar from './TopNavbar';
 import "./Login.css";
 
-export function Error(props) {
-    if (props.error) {
-        if (props.code === 409) {
-            return (<div className="error-div">
-                <Alert type="danger" headline="Uh oh">
-                    {props.type} failed, email address already in use
-            </Alert>
-            </div> 
-            )
-        } else{
-            return (<div className="error-div">
-                <Alert type="danger" headline="Uh oh">
-                    {props.type} failed, please ensure correct details
-            </Alert>
-            </div>
-            )
-        }
-    }
-    else {
-        return (<div></div>)
-    }
-}
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(false);
+    //Clear is default - non authenticated user
     const [authenticated, setAuthenticated] = useState('clear');
 
 
@@ -49,7 +28,6 @@ export default function Login() {
                     localStorage.setItem('token', res.token);
                     setAuthenticated(localStorage.getItem('token'))
                     window.location.reload();
-                    console.log(localStorage.getItem('token'))
                 }
                 else {
                     setError(true);
@@ -114,5 +92,29 @@ export default function Login() {
             </div>
         )
     }
+}
 
+export function Error(props) {
+    if (props.error) {
+        if (props.code === 409) {
+            return (
+                <div className="error-div">
+                    <Alert type="danger" headline="Uh oh">
+                        {props.type} failed, email address already in use
+                    </Alert>
+                </div> 
+            )
+        } else{
+            return (
+                <div className="error-div">
+                    <Alert type="danger" headline="Uh oh">
+                        {props.type} failed, please ensure correct details
+                    </Alert>
+                </div>
+            )
+        }
+    }
+    else {
+        return (<div></div>)
+    }
 }

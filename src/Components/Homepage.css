@@ -26,22 +26,3 @@ p{
 .title{
     font-size: calc(1.5em + 1vw);
 }
-
-.card{
-    border-radius: 15px !important;
-}
-
-  .Card-image:hover{
-    background-color: #eb8d8d;
-    border-radius: 15px;
-  }
-
-.optionCard{
-    display: inline-block;
-    width: 180px;
-    margin-left: 5%;
-    margin-bottom: 10px;
-    align-items: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 22px;
-}

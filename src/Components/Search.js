@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert } from "react-bs-notifier";
-import { Redirect}  from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "./Search.css";
 import "./Homepage.css";
 
@@ -19,47 +19,35 @@ export default function Search() {
         setLoading(false);
     },
         [search]);
-    
+
     if (error) {
         if (statusCode === 400)
             return (
                 <div className="jumbo">
-            <div className="transbox">
-                <div className="transMessage">
-                        <div className="title">
-                        Search By Stock Code
-                </div>
-                </div>
-            </div>
+                    <SearchTitle />
                     <div className="search-div">
                         <div className="error-div">
-                <Alert type="danger" headline="Uh oh">
-                    You have entered invalid query parameters!
-                </Alert>
-                <SearchBar onSubmit={setSearch} />
+                            <Alert type="danger" headline="Uh oh">
+                                You have entered invalid query parameters!
+                            </Alert>
+                            <SearchBar onSubmit={setSearch} />
                         </div>
                     </div>
-                    </div>
+                </div>
             )
         else {
             return (
                 <div className="jumbo">
-            <div className="transbox">
-                <div className="transMessage">
-                        <div className="title">
-                        Search By Stock Code
-                </div>
-                </div>
-            </div>
+                    <SearchTitle />
                     <div className="search-div">
                         <div className="error-div">
-                <Alert type="danger" headline="Uh oh">
-                    No entry for {search} found in the stocks database.
-                    </Alert>
-                <SearchBar onSubmit={setSearch} />
+                            <Alert type="danger" headline="Uh oh">
+                                No entry for {search} found in the stocks database.
+                            </Alert>
+                            <SearchBar onSubmit={setSearch} />
                         </div>
                     </div>
-                    </div>
+                </div>
             )
         }
     }
@@ -73,47 +61,58 @@ export default function Search() {
     if (!error) {
         return (
             <div className="jumbo">
-            <div className="transbox">
-                <div className="transMessage">
+                <div className="transbox">
+                    <div className="transMessage">
                         <div className="title">
-                        Search By Stock Code
+                            Search By Stock Code
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-            <div className="search-div">
+                <div className="search-div">
                     <SearchBar onSubmit={setSearch} />
                 </div>
-                </div>
-                
+            </div>
         )
     }
-
 }
+
+function SearchTitle() {
+    return (
+        <div>
+            <div className="transbox">
+                <div className="transMessage">
+                    <div className="title">
+                        Search By Stock Code
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 
 function SearchBar(props) {
     const [innerSearch, setInnerSearch] = useState('');
     return (
-
         <div>
-                <p>Please Enter 1-5 Uppercase Letters</p>
-                    <input
-                        aria-labelledby="search-button"
-                        name="search"
-                        id="search"
-                        type="search"
-                        value={innerSearch}
-                        onChange={(e) => setInnerSearch(e.target.value)}
-                        maxLength="5"
-                    />
-                    <br /> <br /> <br />
-                    <button
-                        id="search-button"
-                        type="button"
-                        onClick={() => { props.onSubmit(innerSearch); setInnerSearch(""); }}
-                    >
-                        Search
+            <p>Please Enter 1-5 Uppercase Letters</p>
+            <input
+                aria-labelledby="search-button"
+                name="search"
+                id="search"
+                type="search"
+                value={innerSearch}
+                onChange={(e) => setInnerSearch(e.target.value)}
+                maxLength="5"
+            />
+            <br /> <br /> <br />
+            <button
+                id="search-button"
+                type="button"
+                onClick={() => { props.onSubmit(innerSearch); setInnerSearch(""); }}
+            >
+                Search
             </button>
-                </div>
-       
+        </div>
     )
 }

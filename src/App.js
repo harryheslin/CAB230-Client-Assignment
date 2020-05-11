@@ -2,7 +2,6 @@ import React from 'react';
 import Homepage from './Components/Homepage';
 import ViewAll from './Components/ViewAll';
 import Search from './Components/Search';
-import Compare from './Components/Compare';
 import Login from './Components/Login';
 import Logout from './Components/Logout';
 import TopNavbar from './Components/TopNavbar';
@@ -38,15 +37,11 @@ function App() {
           <Route path="/search">
             <Search />
           </Route>
-          <Route path="/compare">
-            <Compare />
-          </Route>
           <Route path="/stock/:code" children={<Stock />}>
           </Route>
         </Switch>
         </div>
       </Router>
-    
   );
 }
 

@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import "./Login.css";
 import { Error } from './Login'
 
+
 export default function Signup() {
     const [innerEmail, setInnerEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,10 +15,6 @@ export default function Signup() {
 
     function submitSignup() {
         const url = "http://131.181.190.87:3000/user/register"
-        console.log(innerEmail);
-        console.log(password)
-        console.log(repeatPassword);
-        console.log(errorCode)
         if (password === repeatPassword) {
             return fetch(url, {
                 method: "POST",
@@ -31,16 +28,14 @@ export default function Signup() {
                         setInnerEmail('');
                         setPassword('');
                         setRepeatPassword('');
-                        throw Error(res.statusText)
                     }
                     else {
                         setError(false);
                         setAccepted(true);
-                       
                     }
                 })
-                .catch((error) => {
-            })
+                .catch((e) => {
+                })
         }
         else {
             setError(true);
@@ -49,7 +44,6 @@ export default function Signup() {
             setPassword('');
             setRepeatPassword('');
         }
-
     }
 
     if (accepted === false) {
@@ -60,7 +54,7 @@ export default function Signup() {
                         <div className="transMessage">
                             <div className="title">
                                 Bulls Trading Exchange Portal
-                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="login-div">
@@ -68,7 +62,7 @@ export default function Signup() {
                         <div>
                             <p className="login-label">Email</p>
                             <input
-                                aria-labelledby="submit-button"
+                                aria-labelledby="email-field"
                                 name="email"
                                 id="email"
                                 type="email"
@@ -78,7 +72,7 @@ export default function Signup() {
                             <br />
                             <p className="login-label" >Create Password</p>
                             <input
-                                aria-labelledby="submit-button"
+                                aria-labelledby="password-field"
                                 name="password"
                                 id="password"
                                 type="password"
@@ -88,7 +82,7 @@ export default function Signup() {
                             <br />
                             <p className="login-label" >Repeat Password</p>
                             <input
-                                aria-labelledby="submit-button"
+                                aria-labelledby="repeat-password-field"
                                 name="repeat-password"
                                 id="repeat-password"
                                 type="password"
@@ -102,13 +96,13 @@ export default function Signup() {
                                 onClick={() => { submitSignup() }}
                             >
                                 Signup
-                </button>
+                        </button>
                         </div>
                     </div>
                 </div>
             </div>
         );
-    } else if (accepted === true){
+    } else if (accepted === true) {
         return (
             <div>
                 <Redirect to="/login" />
