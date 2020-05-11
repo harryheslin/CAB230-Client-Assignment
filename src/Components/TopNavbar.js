@@ -1,12 +1,11 @@
 import './TopNavBar.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
   NavbarText
 } from 'reactstrap';
 import {
@@ -21,21 +20,20 @@ export default function NavigationBar(props) {
   let token = localStorage.getItem("token");
 
   if (token !== "clear") {
-    console.log(token);
     return (
       <div>
         <Navbar className="navbar-light topNav" expand="md">
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar >
             <Nav className="mr-auto" navbar>
-
+              
+              {/* <NavbarBrand> */}
               <Link to="/">
-                <NavbarBrand>
-                  <img src="bulllogo.png" width="90" height="50" class="d-inline-block align-top" alt="Logo">
+                  <img src="bulllogo.png" width="90" height="50" className="d-inline-block align-top" alt="Logo">
                   </img>
-                </NavbarBrand>
-              </Link>
-             
+                  </Link>
+                  {/* </NavbarBrand> */}
+                
               <NavbarText>
                 <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>
               </NavbarText>
@@ -59,10 +57,10 @@ export default function NavigationBar(props) {
           <Collapse isOpen={isOpen} navbar >
             <Nav className="mr-auto" navbar>
               <Link to="/">
-                <NavbarBrand>
-                  <img src="bulllogo.png" width="90" height="50" class="d-inline-block align-top" alt="Logo">
+                {/* <NavbarBrand> */}
+                  <img src="bulllogo.png" width="90" height="50" className="d-inline-block align-top" alt="Logo">
                   </img>
-                </NavbarBrand>
+                {/* </NavbarBrand> */}
               </Link>
               <NavbarText>
                 <Link to="/viewAll" className="navigate-buttons">View&nbsp;All</Link>

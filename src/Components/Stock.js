@@ -6,7 +6,8 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
 import "./Homepage.css";
 import "./Stock.css";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
 
 
 export default function Stock(props) {
@@ -14,32 +15,21 @@ export default function Stock(props) {
   const url = (window.location.pathname);
   const re = new RegExp('([A-Z.]+)');
   const [code, setCode] = re.exec(url);
-
-  //const [companyData, setCompanyData] = useState([{
-  //   timestamp: "",
-  //   symbol: "",
-  //   name: "",
-  //   industry: "",
-  //   open: "",
-  //   high: "",
-  //   low: "",
-  //   close: "",
-  //   volumes: ""
-  // }]);
   const [loading, setLoading] = useState(true);
   const [companyData, setCompanyData] = useState([{}]);
   const [latestCompanyData, setlatestCompanyData] = useState([{}]);
   let authenticated = (localStorage.getItem('token'));
   const [searchDate, setSearchDate] = useState("");
+  const [expiredToken, setExpiredToken] = useState(false);
 
 
   useEffect(() => {
+
     const headers = {
       accept: "applciation/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${authenticated}`,
+      Authorization: `Bearer ${authenticated}`
     };
-    console.log(authenticated);
 
     fetch("http://131.181.190.87:3000/stocks/" + code)
       .then(res => res.json())
@@ -56,7 +46,7 @@ export default function Stock(props) {
       }]))
 
     if (searchDate !== "" && searchDate !== latestCompanyData[0].timestamp) {
-      fetch("http://131.181.190.87:3000/stocks/authed/" + code + "?from=" + searchDate + "T00%3A00%3A00.000Z&to=" + latestCompanyData[0].timestamp + "T00%3A00%3A00.000Z", { headers })
+      fetch("http://131.181.190.87:3000/stocks/authed/" + code + "?from=" + searchDate + "T00%3A00%3A00.000Z&to=" + latestCompanyData[0].timestamp + "T00%3A00%3A00.000Z", {headers})
         .then(res => res.json())
         .then(data =>
           data.map(company => {
@@ -75,13 +65,13 @@ export default function Stock(props) {
           )
         )
         .then(allCompanies => setCompanyData(allCompanies.concat(latestCompanyData)))
-        .then(setLoading(false));
+        .then(setLoading(false))
+        .catch(error => setExpiredToken(true));
     }
     else {
       setLoading(false);
     }
-    console.log(searchDate)
-  }, [searchDate]);
+  }, [searchDate, authenticated, code]);
 
 
   function HistorySearch(props) {
@@ -94,20 +84,20 @@ export default function Stock(props) {
             <input type="date" id="start" name="trip-start"
               value={innerDateSearch}
               onChange={(e) => setInnerDateSearch(e.target.value)}
-              min="2018-01-01" max={latestCompanyData[0].timestamp}></input>
-            <button onClick={() => { props.onSubmit(innerDateSearch) }}>Search</button>
+              min="2010-01-01" max={latestCompanyData[0].timestamp}></input>
+            <button onClick={() => { if (innerDateSearch <= latestCompanyData[0].timestamp) { props.onSubmit(innerDateSearch) } }}>Search</button>
           </div>
         </div>
       )
     }
     else {
-      return(<div></div>)
+      return (<div></div>)
     }
 
   }
 
   function Table() {
-    
+
     return (
       <div>
         <div
@@ -119,11 +109,11 @@ export default function Stock(props) {
             marginTop: "0vh"
           }}
         >
-          <HistorySearch onSubmit={setSearchDate}/>
+          <HistorySearch onSubmit={setSearchDate} />
           <AgGridReact
-             rowData={searchDate === "" || searchDate === latestCompanyData[0].timestamp ? latestCompanyData : companyData}
-          //  pagination={true}
-          //  paginationPageSize={30}
+            rowData={searchDate === "" || searchDate === latestCompanyData[0].timestamp || expiredToken? latestCompanyData : companyData}
+            pagination={true}
+            paginationPageSize={15}
           >
             <AgGridColumn headerName="Date" field="timestamp" filter="agTextColumnFilter" sort="asc" sortable="true" width={250} flex={300}></AgGridColumn>
             <AgGridColumn headerName="Open" field="open" filter="agTextColumnFilter" sortable="true" width={100} flex={150}></AgGridColumn>
@@ -144,11 +134,11 @@ export default function Stock(props) {
       <div className="chart-background">
         <div className="chart">
           <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
-            <Line strokeWidth="2" type="monotone" activeDot="true" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
+            <Line strokeWidth="2" type="monotone" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
             <CartesianGrid stroke="black" strokeDasharray="1 1" />
             <XAxis dataKey="name" stroke="black" />
             <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
-            <Tooltip height="1px" />
+            <Tooltip height="1px" content={<CustomTooltip />} />
           </LineChart>
         </div>
         <ViewHistory />
@@ -161,7 +151,8 @@ export default function Stock(props) {
       return (
         <div className="unverrified">
           {<Link to="/login" style={{
-            color: "black"
+            color: "black",
+            marginLeft: "90px"
           }}> Login </Link>} to view stock history
           <Table />
         </div>
@@ -183,40 +174,63 @@ export default function Stock(props) {
         </div>
       );
     }
-
     return null;
   }
+
+  function DateTitle() {
+    if (companyData.length === 1) {
+      return (
+        <div>
+          {latestCompanyData[0].timestamp}
+        </div>
+      )
+    }
+    else {
+      return (
+        <div>
+          {searchDate} - {latestCompanyData[0].timestamp}
+        </div>
+      )
+    }
+  }
+
   const formatter = (value) => `$${value}`;
   function renderCurrentStock() {
+    if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 || authenticated === "clear") {
+      return (<LatestGraph />)
 
-      if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 || authenticated === "clear") {
-        return (<LatestGraph />)
+    } else {
+      const data = companyData.slice(0).reverse().map((companyData) => ({ name: 'Close', Price: companyData.close, Date: companyData.timestamp }))
+      return (
+        <div className="chart-background">
+          <div className="chart">
+            <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
 
-      } else {
-        const data = companyData.slice(0).reverse().map((companyData) => ({ name: 'Close', Price: companyData.close, Date: companyData.timestamp }))
-        return (
-          <div className="chart-background">
-            <div className="chart">
-              <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
-
-                <Line strokeWidth="2" type="monotone" activeDot="true" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
-                <CartesianGrid stroke="black" strokeDasharray="1 1" />
-                <XAxis stroke="black" dataKey="Date" tick={false} />
-                <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
-                <Tooltip height="1px" content={<CustomTooltip />} />
-              </LineChart>
-              <p id="close-price-title">Closing Prices</p>
-            </div>
-            <ViewHistory />
+              <Line strokeWidth="2" type="monotone" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
+              <CartesianGrid stroke="black" strokeDasharray="1 1" />
+              <XAxis stroke="black" dataKey="Date" tick={false} />
+              <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
+              <Tooltip height="1px" content={<CustomTooltip />} />
+            </LineChart>
+            <p id="close-price-title">Closing Prices</p>
           </div>
-        )
+          <ViewHistory />
+        </div>
+      )
     }
   };
+  if (expiredToken) {
+    return (
+      <div>
+        <Redirect to="/logout" />
+      </div>
+    )
+  }
 
-  if (!loading) {
+  else if (!loading) {
     return (
       <div className="jumbo">
-        <div class="transbox">
+        <div className="transbox">
           <div className="transMessage">
             <div className="title">
               {latestCompanyData[0].name}
@@ -225,7 +239,7 @@ export default function Stock(props) {
               {latestCompanyData[0].symbol} - {latestCompanyData[0].industry}
             </div>
             <div className="transMessage">
-              {latestCompanyData[0].timestamp}
+              <DateTitle />
             </div>
           </div>
         </div>
@@ -234,7 +248,7 @@ export default function Stock(props) {
         </div>
       </div>
     );
-
+  
   }
   else {
     return (

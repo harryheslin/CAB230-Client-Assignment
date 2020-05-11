@@ -33,7 +33,7 @@
 }
 .custom-tooltip{
     color: black;
-    font-size: 10px;
+    font-size: 4px;
 }
 
 .table-heading{
@@ -45,6 +45,12 @@
     font-weight: bold;
     text-decoration: underline;
 }
+
+.input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+}
+
 
 .chart{
     float:left;

@@ -12,7 +12,6 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import StockInfo from './Components/StockInfo';
 import Stock from './Components/Stock';
 
 function App() {

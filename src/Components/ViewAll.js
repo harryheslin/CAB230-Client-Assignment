@@ -6,7 +6,6 @@ import "./ViewAll.css";
 import "./Homepage.css";
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
-import Stock from './Stock';
 import { Redirect } from 'react-router-dom';
 
 const industries = [
@@ -63,7 +62,9 @@ export default function ViewAll() {
               </DropdownToggle>
                 <DropdownMenu className="industry-drop">
                     {industries.map(company => (
-                        <DropdownItem onClick={setIndustryFunc.bind(company)}>{company.title}</DropdownItem>
+                        <React.Fragment key={company.title}>
+                            <DropdownItem onClick={setIndustryFunc.bind(company)}>{company.title}</DropdownItem>
+                            </React.Fragment>
                     ))}
                 </DropdownMenu>
             </Dropdown>
@@ -95,7 +96,7 @@ export default function ViewAll() {
         return (
             <div>
             <div className="jumbo">
-                <div class="transbox">
+                <div className="transbox">
                     <div className="transMessage">
                         {/* <p> */}
                             <div className="title">

@@ -6,7 +6,7 @@ const Homepage = (props) => {
   return (
     <div>
       <div className="jumbo">
-      <div class="transbox">
+      <div className="transbox">
             <div className="transMessage">
                 <div className="title">
                   Bulls Trading Exchange Portal

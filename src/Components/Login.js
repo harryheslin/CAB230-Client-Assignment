@@ -4,14 +4,23 @@ import { Redirect } from "react-router-dom";
 import NavigationBar from './TopNavbar';
 import "./Login.css";
 
-function Error(props) {
+export function Error(props) {
     if (props.error) {
-        return (<div className="error-div">
-            <Alert type="danger" headline="Uh oh">
-                {props.type} failed, please ensure correct details
+        if (props.code === 409) {
+            return (<div className="error-div">
+                <Alert type="danger" headline="Uh oh">
+                    {props.type} failed, email address already in use
             </Alert>
-        </div>
-        )
+            </div> 
+            )
+        } else{
+            return (<div className="error-div">
+                <Alert type="danger" headline="Uh oh">
+                    {props.type} failed, please ensure correct details
+            </Alert>
+            </div>
+            )
+        }
     }
     else {
         return (<div></div>)
@@ -44,6 +53,8 @@ export default function Login() {
                 }
                 else {
                     setError(true);
+                    setEmail('');
+                    setPassword('');
                 }
             })
     }
@@ -52,7 +63,7 @@ export default function Login() {
         return (
             <div>
                 <div className="jumbo">
-                    <div class="transbox">
+                    <div className="transbox">
                         <div className="transMessage">
                             <div className="title">
                                 Bulls Trading Exchange Portal
