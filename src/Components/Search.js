@@ -18,6 +18,7 @@ export default function Search() {
         }
         setLoading(false);
     },
+        // eslint-disable-next-line
         [search]);
 
     if (error) {

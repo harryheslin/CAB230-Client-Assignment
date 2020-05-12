@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { AgGridColumn } from 'ag-grid-react/lib/agGridColumn';
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
@@ -21,10 +22,10 @@ export default function Stock(props) {
   const [latestCompanyData, setlatestCompanyData] = useState([{}]);
   const [searchDate, setSearchDate] = useState("");
   const [expiredToken, setExpiredToken] = useState(false);
+  const [graphValue, setGraphValue] = useState("Close");
 
   let authenticated = (localStorage.getItem('token'));
-
-
+  
   useEffect(() => {
 
     const headers = {
@@ -32,7 +33,7 @@ export default function Stock(props) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${authenticated}`
     };
-
+    
     fetch("http://131.181.190.87:3000/stocks/" + code)
       .then(res => res.json())
       .then(res => setlatestCompanyData([{
@@ -73,12 +74,12 @@ export default function Stock(props) {
     else {
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, [searchDate, authenticated, code]);
-
 
   function HistorySearch(props) {
     const [innerDateSearch, setInnerDateSearch] = useState('');
-    if (authenticated !== "clear") {
+    if (authenticated !== "clear" && authenticated != null) {
       return (
         <div>
           <p id="date-title">Select a date for history</p>
@@ -128,7 +129,7 @@ export default function Stock(props) {
   }
 
   function ViewHistory() {
-    if (authenticated === "clear") {
+    if (authenticated === "clear" || authenticated == null) {
       return (
         <div className="unverrified">
           {<Link to="/login" style={{
@@ -147,7 +148,7 @@ export default function Stock(props) {
   }
 
   function DateTitle() {
-    if (companyData.length === 1) {
+    if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 ) {
       return (
         <div>
           {latestCompanyData[0].timestamp}
@@ -164,24 +165,52 @@ export default function Stock(props) {
   }
 
   function viewCompanyData() {
-    if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 || authenticated === "clear") {
+    if (searchDate === "" || searchDate === latestCompanyData[0].timestamp || companyData.length === 1 || authenticated === "clear" || authenticated == null) {
 
       return [{ name: 'Open', Price: latestCompanyData[0].open }, { name: 'High', Price: latestCompanyData[0].high },
       { name: 'Low', Price: latestCompanyData[0].low }, { name: 'Close', Price: latestCompanyData[0].close }];
     }
     else {
-      return companyData.slice(0).reverse().map((companyData) => ({ name: 'Close', Price: companyData.close, Date: companyData.timestamp }))
+      if (graphValue === "Close") {
+        return companyData.slice(0).reverse().map((companyData) => ({ name: 'Close', Price: companyData.close, Date: companyData.timestamp }))
+      }
+      else {
+        return companyData.slice(0).reverse().map((companyData) => ({ name: 'Volumes', Price: companyData.volumes, Date: companyData.timestamp }))
+      }
     }
+  }
+  
+  function setGraphValueFunc() {
+    setGraphValue(this);
+  }
+
+  function GraphDrop() {
+
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const toggle = () => setDropdownOpen(prevState => !prevState);
+
+    return (
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle caret>
+          Graph Item
+            </DropdownToggle>
+        <DropdownMenu className="graph-drop">
+          <DropdownItem onClick={setGraphValueFunc.bind("Close")}>Close</DropdownItem>
+          <DropdownItem onClick={setGraphValueFunc.bind("Volume")}>Volume</DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+    )
   }
 
   function renderCurrentStock() {
+
     const formatter = (value) => `$${value}`;
 
     const CustomTooltip = ({ payload, label = "clear", active }) => {
       if (active && payload.length !== 0) {
         return (
           <div className="custom-tooltip">
-            <p className="label">{`${label} : ${"$" + payload[0].value}`}</p>
+            <p className="label">{`${label} : ${ graphValue === "Close" ? `$` + payload[0].value: payload[0].value}`}</p>
           </div>
         );
       }
@@ -197,10 +226,10 @@ export default function Stock(props) {
             <CartesianGrid stroke="black" strokeDasharray="1 1" />
             <XAxis stroke="black" dataKey={companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? "name" : "Date"}
               tick={companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? true : false} />
-            <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
-            <Tooltip content={<CustomTooltip />} height="10px"/>
+            <YAxis stroke="black" dataKey="Price" tickFormatter={graphValue === "Close" ? formatter : ""} tick={graphValue === "Volume" ? true : true} width={100}/>
+            <Tooltip content={<CustomTooltip />} height="10px" />
           </LineChart>
-          {companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? <div></div> : <p id="close-price-title">Closing Prices</p>}
+          {companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? <div></div> : <div><p id="close-price-title">{graphValue}</p><GraphDrop /></div>} 
         </div>
         <ViewHistory />
       </div>

@@ -15,6 +15,11 @@
     color: white;
 }
 
+.graph-drop{
+    float: left;
+}
+
+
 .table{
     float:right;  
 }
