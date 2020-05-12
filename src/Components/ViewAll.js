@@ -107,7 +107,7 @@ export default function ViewAll() {
                         className="ag-theme-alpine-dark table"
                         style={{
                         height: "60vh",
-                        width: "90%",
+                        width: "90vw",
                         marginRight: "5%",
                         marginLeft : "5%"
                         }}

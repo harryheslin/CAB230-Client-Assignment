@@ -146,18 +146,6 @@ export default function Stock(props) {
     }
   }
 
-
-  function CustomTooltip({ payload, label, active }) {
-    if (active) {
-      return (
-        <div className="custom-tooltip">
-          <p className="label">{`${label} : ${"$" + payload[0].value}`}</p>
-        </div>
-      );
-    }
-    return null;
-  }
-
   function DateTitle() {
     if (companyData.length === 1) {
       return (
@@ -186,26 +174,37 @@ export default function Stock(props) {
     }
   }
 
-  const formatter = (value) => `$${value}`;
   function renderCurrentStock() {
-    const data = viewCompanyData();
+    const formatter = (value) => `$${value}`;
 
-      return (
-        <div className="chart-background">
-          <div className="chart">
-            <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
-              <Line strokeWidth="2" type="monotone" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
-              <CartesianGrid stroke="black" strokeDasharray="1 1" />
-              <XAxis stroke="black" dataKey={companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? "name" : "Date"}
-                tick={companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? true : false} />
-              <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
-              <Tooltip height="1px" content={<CustomTooltip />} />
-            </LineChart>
-            {companyData.length === 1 ? <div></div>: <p id="close-price-title">Closing Prices</p>}
+    const CustomTooltip = ({ payload, label = "clear", active }) => {
+      if (active && payload.length !== 0) {
+        return (
+          <div className="custom-tooltip">
+            <p className="label">{`${label} : ${"$" + payload[0].value}`}</p>
           </div>
-          <ViewHistory />
+        );
+      }
+      return null;
+    }
+
+    const data = viewCompanyData();
+    return (
+      <div className="chart-background">
+        <div className="chart">
+          <LineChart width={550} height={390} data={data} margin={{ top: 50, right: 40, bottom: 0, left: 0 }}>
+            <Line strokeWidth="2" type="monotone" dot={false} dataKey="Price" stroke="rgb(160, 63, 63)" />
+            <CartesianGrid stroke="black" strokeDasharray="1 1" />
+            <XAxis stroke="black" dataKey={companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? "name" : "Date"}
+              tick={companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? true : false} />
+            <YAxis stroke="black" dataKey="Price" tickFormatter={formatter} />
+            <Tooltip content={<CustomTooltip />} height="10px"/>
+          </LineChart>
+          {companyData.length === 1 || searchDate === latestCompanyData[0].timestamp ? <div></div> : <p id="close-price-title">Closing Prices</p>}
         </div>
-      )
+        <ViewHistory />
+      </div>
+    )
   };
 
   if (expiredToken) {
